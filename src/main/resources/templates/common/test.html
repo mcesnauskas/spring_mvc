@@ -10,20 +10,31 @@
 </head>
 <body>
 <div class="container">
-
     <div class="d-flex justify-content-around align-items-center">
         <a th:href="@{home}" class="fs-6 fw-medium text-info col-1">back</a>
         <h1 class="text-center text-success m-5 col-11">TEST PAGE</h1>
     </div>
-
     <div class="d-flex justify-content-around m-5">
         <div class="square blue"></div>
         <div class="square green"></div>
         <div class="square yellow"></div>
     </div>
-
+    <div class="d-grid m-5 justify-content-center">
+        <button type="button" class="btn btn-outline-warning btn-lg" id="btnAlertId" th:onclick="showAlert()" onclick="showAlert()">Show alert</button>
+    </div>
 </div>
 
+<script>
+<!--    const btnAlert = document.getElementById("btnAlertId");-->
+<!--    btnAlert.addEventListener(-->
+<!--    "click", ()=>{-->
+<!--        alert("Alert message");-->
+<!--    }-->
+<!--);-->
+    function showAlert(){
+        alert("Alert message");
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
