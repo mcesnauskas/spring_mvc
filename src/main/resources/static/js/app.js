@@ -8,3 +8,7 @@
     function showAlert(){
         alert("Alert message");
     }
+
+    function showMessageAlert(message){
+        alert("Received message: " + message);
+    }

@@ -21,7 +21,9 @@ public class HomeController {
     }
 
     @GetMapping("/test")
-    public String getTest(){
+    public String getTest(Model model){
+        String message = "Some important new message";
+        model.addAttribute("attrMessage", message);
         return "common/test";
     }
 }
