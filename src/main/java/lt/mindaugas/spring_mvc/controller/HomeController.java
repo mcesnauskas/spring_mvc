@@ -24,6 +24,6 @@ public class HomeController {
     public String getTest(Model model){
         String message = "Some important new message";
         model.addAttribute("attrMessage", message);
-        return "common/test";
+        return "/test";
     }
 }

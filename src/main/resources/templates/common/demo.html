@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+</head>
+<body>
+
+<div class="container text-center">
+    <h2 class="text-center text-primary m-2">Demo page</h2>
+</div>
+<hr>
+<div class="container">
+
+    <div class="d-flex justify-content-around align-items-center">
+        <a th:href="@{../home}" class="fs-6 fw-medium text-info col-1 mb-3">HOME</a>
+    </div>
+
+    <div class="d-flex justify-content-center gap-2">
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item active">Person ${object.field}</li>
+                <li class="list-group-item" th:text="'ID: ' + ${attrPerson.personId}">... empty ...</li>
+                <li class="list-group-item" th:text="'First name: ' + ${attrPerson.firstName}">... empty ...</li>
+                <li class="list-group-item" th:text="'Last name: ' + ${attrPerson.lastName}">... empty ...</li>
+                <li class="list-group-item" th:text="'Email: ' + ${attrPerson.email}">... empty ...</li>
+                <li class="list-group-item" th:text="'Country: ' + ${attrPerson.country}">... empty ...</li>
+                <li class="list-group-item" th:text="'Hobbies: ' + ${attrPerson.hobbies}">... empty ...</li>
+            </ul>
+        </div>
+        <div>
+            <ul class="list-group" th:object="${attrPerson}">
+                <li class="list-group-item active">Person *{field}</li>
+                <li class="list-group-item" th:text="'ID: ' + *{personId}"/>
+                <li class="list-group-item" th:text="'First name: ' + *{firstName}"/>
+                <li class="list-group-item" th:text="'Last name: ' + *{lastName}"/>
+                <li class="list-group-item" th:text="'Email: ' + *{email}"/>
+                <li class="list-group-item" th:text="'Country: ' + *{country}"/>
+                <li class="list-group-item" th:text="'Hobbies: ' + *{hobbies}"/>
+            </ul>
+        </div>
+        <div>
+            <ul class="list-group" th:object="${attrPerson02}">
+                <li class="list-group-item active">Person *{field}</li>
+                <li class="list-group-item" th:text="'ID: ' + (*{personId} ?: 'Unknown')"/>
+                <li class="list-group-item" th:text="'First name: ' + (*{firstName} ?: 'Unknown')"/>
+                <li class="list-group-item" th:text="'Last name: ' + (*{lastName} ?: 'Unknown')"/>
+                <li class="list-group-item" th:text="'Email: ' + (*{email} ?: 'Unknown')"/>
+                <li class="list-group-item" th:text="'Country: ' + (*{country} ?: 'Unknown')"/>
+                <li class="list-group-item" th:text="'Hobbies: ' + (*{hobbies} ?: 'Unknown')"/>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
