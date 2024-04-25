@@ -25,6 +25,7 @@ public class DemoController {
 
         model.addAttribute("attrPerson", person);
         model.addAttribute("attrPerson02", person2);
+        model.addAttribute("attrHobbies", hobbies);
 
         return "common/demo";
     }
