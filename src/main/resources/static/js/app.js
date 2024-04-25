@@ -39,3 +39,4 @@
 
     window.onload = displaySelectedHobby02();
     window.onload = displaySelectedHobby03();
+

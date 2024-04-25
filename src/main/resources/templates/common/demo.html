@@ -101,6 +101,26 @@
         </div>
 
     </div>
+
+    <div class="m-3">
+        <hr>
+    </div>
+
+    <div class="d-flex justify-content-center gap-2 text-center">
+        <div>
+            <p class="border border-2 border-primary rounded-2 px-3"
+               th:text="${#dates.format(#dates.createNow(), 'YYYY/MM/dd HH:mm:ss')}"
+            >0000.00.00 00:00</p>
+
+            <p class="border border-2 border-primary rounded-2 px-3"
+               th:text="${#dates.createNow()}"
+            >0000.00.00 00:00</p>
+
+            <p th:class="${attrStyle}" th:text="${#temporals.format(attrLocalDate, 'YYYY.MM.dd')}">0000.00.00 00:00</p>
+
+            <p th:class="${attrStyle}" th:text="${#temporals.format(attrLocalDateTime, 'YYYY.MM.dd HH:mm:ss')}">0000.00.00 00:00</p>
+        </div>
+    </div>
 </div>
 
 <script th:src="@{/js/app.js}">
