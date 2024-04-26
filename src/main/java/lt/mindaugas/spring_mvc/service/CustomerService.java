@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -29,6 +31,16 @@ public class CustomerService {
                         toNumberOrDefault(requestParam.get(PARAM_PAGE_SIZE), defaultPageSize)
                 )
         );
+    }
+
+    public ResponseEntity<?> getCustomerById(int customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(customer.get());
     }
 
     private ResponseEntity<?> fetchAllCustomersResponse(Pageable page) {
