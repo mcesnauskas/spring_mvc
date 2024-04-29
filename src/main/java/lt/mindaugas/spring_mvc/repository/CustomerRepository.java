@@ -17,4 +17,9 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
             nativeQuery = true
     )
     int autoIncrementId();
+
+    @Query(value = "SELECT * FROM customers WHERE customerName LIKE :name AND city LIKE :city AND country LIKE :country",
+            countQuery = "SELECT count(*) FROM customers WHERE customerName LIKE :name AND city LIKE :city AND country LIKE :country",
+            nativeQuery = true)
+    Page<Customer> searchCustomer(Pageable page, String name, String city, String country);
 }

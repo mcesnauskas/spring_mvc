@@ -23,6 +23,20 @@ public class CustomerController {
     ){
         CustomerResponse response = (CustomerResponse) customerService.getAllCustomers(requestParam).getBody();
         model.addAttribute("attrCustomers", response);
+        model.addAttribute("attrSearchCustomer", new Customer());
+        return "customer/customers";
+    }
+
+    @PostMapping(path = "/search")
+    private String searchCustomers(
+            @ModelAttribute("attrSearchCustomer") Customer searchCustomer,
+            @RequestParam(required = false) Map<String, String> requestParam,
+            Model model
+    ){
+        CustomerResponse response =
+                (CustomerResponse) customerService.searchCustomers(requestParam, searchCustomer).getBody();
+        model.addAttribute("attrCustomers", response);
+        model.addAttribute("attrSearchCustomer", searchCustomer);
         return "customer/customers";
     }
 

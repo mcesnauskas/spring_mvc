@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.CacheRequest;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,6 +31,17 @@ public class CustomerService {
                         toNumberOrDefault(requestParam.get(PARAM_PAGE), defaultPage),
                         toNumberOrDefault(requestParam.get(PARAM_PAGE_SIZE), defaultPageSize)
                 )
+        );
+    }
+
+    public ResponseEntity<?> searchCustomers(Map<String, String> requestParam, Customer searchCustomer) {
+
+        return searchCustomerResponse(
+                PageRequest.of(
+                        toNumberOrDefault(requestParam.get(PARAM_PAGE), defaultPage),
+                        toNumberOrDefault(requestParam.get(PARAM_PAGE_SIZE), defaultPageSize)
+                ),
+                searchCustomer
         );
     }
 
@@ -66,6 +78,31 @@ public class CustomerService {
                         pageResponse.get().toList()
                 )
         );
+    }
+
+    private ResponseEntity<?> searchCustomerResponse(Pageable page, Customer searchCustomer) {
+        Page<Customer> pageResponse =
+                customerRepository.searchCustomer(
+                        page,
+                        searchDataOrDefault(searchCustomer.getCustomerName()),
+                        searchDataOrDefault(searchCustomer.getCity()),
+                        searchDataOrDefault(searchCustomer.getCountry())
+                        );
+
+        return ResponseEntity.ok(
+                new CustomerResponse(
+                        pageResponse.getPageable().getPageNumber(),
+                        pageResponse.getPageable().getPageSize(),
+                        pageResponse.getTotalPages(),
+                        pageResponse.get().toList()
+                )
+        );
+    }
+
+    private String searchDataOrDefault(String value) {
+        if (value == null) return "%";
+        if (value.isBlank()) return "%";
+        return "%" + value + "%";
     }
 
     private int toNumberOrDefault(String value, int defaultValue) {
