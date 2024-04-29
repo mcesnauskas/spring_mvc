@@ -1,9 +1,9 @@
 package lt.mindaugas.spring_mvc.controller;
 
+import lt.mindaugas.spring_mvc.entity.Customer;
 import lt.mindaugas.spring_mvc.entity.CustomerResponse;
 import lt.mindaugas.spring_mvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +26,53 @@ public class CustomerController {
         return "customer/customers";
     }
 
-    @GetMapping(path = "/{id}")
-    @ResponseBody
-    public ResponseEntity<?> getCustomerById(
-            @PathVariable(name = "id") int customerId
+    @GetMapping(path = "/{id}/details")
+//    @GetMapping(path = "/{id}")
+    public String getCustomerById(
+            @PathVariable(name = "id") int customerId,
+            Model model
     ) {
-        return customerService.getCustomerById(customerId);
+        Customer customer = (Customer) customerService.getCustomerById(customerId).getBody();
+        model.addAttribute("attrCustomer", customer);
+        model.addAttribute("attrClassDisplay", "d-none");
+        return "customer/customer";
+    }
+
+    @PostMapping(path = "/{id}/details")
+//    @PostMapping(path = "/{id:\\d+}")
+    public String postCustomerById(
+            @ModelAttribute("attrCustomer") Customer customer,
+            Model model
+    ) {
+        customerService.saveCustomer(customer);
+        model.addAttribute("attrCustomer", customer);
+        model.addAttribute("attrMessage", "Customer successfully updated!");
+        model.addAttribute("attrClassDisplay", "d-block");
+        return "customer/customer";
+    }
+
+    @PostMapping(path = "/{id}/delete")
+    public String deleteCustomerById(
+            @PathVariable(name = "id") int customerId,
+            @ModelAttribute("attrCustomer") Customer customer
+    ) {
+        customerService.deleteCustomerById(customerId);
+        return "redirect:/customers";
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.GET)
+    public String addCustomer(Model model){
+        model.addAttribute("attrCustomer", new Customer());
+        model.addAttribute("attrClassDisplay", "d-none");
+        return "customer/customer";
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public String addCustomer(@ModelAttribute("attrCustomer") Customer customer, Model model){
+        customerService.createCustomer(customer);
+        model.addAttribute("attrCustomer", customer);
+        model.addAttribute("attrMessage", "New customer Created!");
+        model.addAttribute("attrClassDisplay", "d-block");
+        return "customer/customer";
     }
 }

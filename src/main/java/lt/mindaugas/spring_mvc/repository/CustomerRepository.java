@@ -11,4 +11,10 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
             countQuery = "SELECT count(*) FROM customers",
             nativeQuery = true)
     Page<Customer> fetchAllCustomers(Pageable pageable);
+
+    @Query(
+            value = "SELECT (MAX(customerNumber)+1) FROM customers",
+            nativeQuery = true
+    )
+    int autoIncrementId();
 }

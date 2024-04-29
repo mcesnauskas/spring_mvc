@@ -43,6 +43,19 @@ public class CustomerService {
         return ResponseEntity.ok(customer.get());
     }
 
+    public void createCustomer(Customer customer) {
+        customer.setCustomerId(customerRepository.autoIncrementId());
+        customerRepository.save(customer);
+    }
+
+    public void saveCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    public void deleteCustomerById(int customerId) {
+        customerRepository.deleteById(customerId);
+    }
+
     private ResponseEntity<?> fetchAllCustomersResponse(Pageable page) {
         Page<Customer> pageResponse = customerRepository.fetchAllCustomers(page);
         return ResponseEntity.ok(
